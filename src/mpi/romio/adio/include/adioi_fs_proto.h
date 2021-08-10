@@ -42,6 +42,11 @@ extern struct ADIOI_Fns_struct ADIO_TESTFS_operations;
 /* prototypes are in adio/ad_testfs/ad_testfs.h */
 #endif
 
+#ifdef ROMIO_MADFS
+extern struct ADIOI_Fns_struct ADIO_MADFS_operations;
+/* prototypes are in adio/ad_madfs/ad_madfs.h */
+#endif
+
 #ifdef ROMIO_GPFS
 extern struct ADIOI_Fns_struct ADIO_GPFS_operations;
 /* prototypes are in adio/ad_gpfs/ad_gpfs.h */

@@ -55,6 +55,7 @@ MPI_ERR_IO
     MPIR_PREALLOC_PERM "To preallocate disk space, ROMIO needs to read the file and write it back, but is unable to read the file. Please give the file read permission and open it with MPI_MODE_RDWR."
     MPIR_ERR_FILETYPE  "Filetype must be constructed out of one or more etypes"
     MPIR_ERR_NO_TESTFS "ROMIO has not been configured to use the TESTFS file system"
+    MPIR_ERR_NO_MADFS "ROMIO has not been configured to use the MADFS file system"
     MPIR_ERR_DEFERRED "independent IO attempted even though no_indep_rw hint given"
     MPIR_ERR_NO_GPFS "ROMIO has not been configured to use the GPFS file system"
     MPIR_ERR_NO_IME "ROMIO has not been configured to use the IME burst buffer"

@@ -175,6 +175,9 @@ static struct ADIO_FSTypes fstypes[] = {
 #ifdef ROMIO_TESTFS
     {&ADIO_TESTFS_operations, ADIO_TESTFS, "testfs:"},
 #endif
+#ifdef ROMIO_MADFS
+    {&ADIO_MADFS_operations, ADIO_MADFS, "madfs:"},
+#endif
 #ifdef ROMIO_IME
     {&ADIO_IME_operations, ADIO_IME, "ime:"},
 #endif

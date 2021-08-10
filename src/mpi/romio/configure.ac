@@ -191,7 +191,7 @@ dnl An m4 macro for use with m4_foreach_w and friends.  You should modify this
 dnl list if you want to add a known file system.  The list is just whitespace
 dnl separated, so you can use newlines and tabs as well.
 m4_define([known_filesystems_m4_w],
-          [daos nfs ufs pvfs2 testfs xfs panfs lustre gpfs ime quobytefs])dnl
+          [daos nfs ufs pvfs2 testfs madfs xfs panfs lustre gpfs ime quobytefs])dnl
 dnl
 dnl An m4 macro for use with m4_foreach and friends.  Expands to a quoted list of
 dnl quoted elements.  A bit easier to use without unintended expansion than the
@@ -910,6 +910,33 @@ fi
 if test -n "$file_system_testfs"; then
     AC_DEFINE(ROMIO_TESTFS,1,[Define for ROMIO with TESTFS])
 fi
+
+AC_ARG_WITH([madfs],
+    [AS_HELP_STRING([--with-madfs],
+	    [Build MADFS ROMIO driver[default=no]])],,
+    [with_madfs=no])
+
+AS_IF([test "x$with_madfs" != xno], [
+    MADFS="yes"
+    PAC_SET_HEADER_LIB_PATH(madfs)
+    AC_CHECK_HEADERS(madfs.h,, [
+        AC_MSG_ERROR([NO MADFS HEADER ...])
+        unset MADFS
+    ])
+    AC_CHECK_LIB([madfs_posix_c], [madfs_open],, [
+        AC_MSG_ERROR([NO MADFS LIB ...])
+        unset MADFS
+        ])
+])
+
+if test -n "$file_system_madfs" ; then
+    if test "x$MADFS" == xyes ; then
+	    AC_DEFINE(ROMIO_MADFS,1,[Define for ROMIO with MADFS])
+    else
+	    AC_MSG_ERROR([MADFS support requested but not found (--with-madfs)])
+    fi
+fi
+
 #
 # Verify presence of lustre/lustre_user.h
 #
