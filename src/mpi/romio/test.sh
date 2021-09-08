@@ -23483,9 +23483,9 @@ fi
             ;;
     esac
 
-    for ac_header in madfs.h
+    for ac_header in madfs-posix.h
 do :
-  ac_fn_c_check_header_mongrel "$LINENO" "madfs.h" "ac_cv_header_madfs_h" "$ac_includes_default"
+  ac_fn_c_check_header_mongrel "$LINENO" "madfs-posix.h" "ac_cv_header_madfs_h" "$ac_includes_default"
 if test "x$ac_cv_header_madfs_h" = xyes; then :
   cat >>confdefs.h <<_ACEOF
 #define HAVE_MADFS_H 1

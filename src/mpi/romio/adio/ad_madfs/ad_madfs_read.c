@@ -6,7 +6,8 @@
 #include "ad_madfs.h"
 #include "adioi.h"
 
-#include "madfs.h"
+#include "madfs-posix.h"
+extern const MadfsPosix* madfs;
 
 void ADIOI_MADFS_ReadContig(ADIO_File fd, void *buf, int count,
                              MPI_Datatype datatype, int file_ptr_type,
@@ -33,8 +34,9 @@ void ADIOI_MADFS_ReadContig(ADIO_File fd, void *buf, int count,
     FPRINTF(stdout, "[%d/%d]    reading (buf = %p, loc = %lld, sz = %lld)\n",
             myrank, nprocs, buf, (long long) offset, (long long) datatype_size * count);
     struct ADIO_MADFS_context* context = fd->fs_ptr;
-    madfs_read(context->madfs, context->inode, offset, datatype_size * count, buf);
-
+    uintptr_t len;
+    madfs_read(madfs, context->inode, offset, buf, datatype_size * count, &len);
+    FPRINTF(stdout, "[%d/%d]    ... %ld bytes read.\n", myrank, nprocs, len);
 #ifdef HAVE_STATUS_SET_BYTES
     MPIR_Status_set_bytes(status, datatype, datatype_size * count);
 #endif

@@ -7,6 +7,8 @@
 
 /* adioi.h has the ADIOI_Fns_struct define */
 #include "adioi.h"
+#include "madfs-posix.h"
+const MadfsPosix* madfs = NULL;
 
 struct ADIOI_Fns_struct ADIO_MADFS_operations = {
     ADIOI_MADFS_Open,  /* Open */

@@ -11,11 +11,10 @@
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <fcntl.h>
-#include <madfs.h>
+#include <madfs-posix.h>
 
 struct ADIO_MADFS_context {
-    MadfsPosix madfs;
-    INode inode;
+    const INode *inode;
 };
 
 

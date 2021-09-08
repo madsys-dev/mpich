@@ -6,7 +6,8 @@
 #include "ad_madfs.h"
 #include "adioi.h"
 
-#include "madfs.h"
+#include "madfs-posix.h"
+extern const MadfsPosix* madfs;
 
 void ADIOI_MADFS_WriteContig(ADIO_File fd, const void *buf, int count,
                               MPI_Datatype datatype, int file_ptr_type,
@@ -26,7 +27,9 @@ void ADIOI_MADFS_WriteContig(ADIO_File fd, const void *buf, int count,
     FPRINTF(stdout, "[%d/%d]    writing (buf = %p, loc = %lld, sz = %lld)\n",
             myrank, nprocs, buf, (long long) offset, (long long) datatype_size * (long long) count);
     struct ADIO_MADFS_context *context = fd->fs_ptr;
-    madfs_read(context->madfs, context->inode, offset, datatype_size * count, buf);
+    uintptr_t len;
+    madfs_write(madfs, context->inode, offset, buf, datatype_size * count, &len);
+    FPRINTF(stdout, "[%d/%d]    ... write %ld bytes\n", myrank, nprocs, len);
 
     if (file_ptr_type != ADIO_EXPLICIT_OFFSET) {
         fd->fp_ind += datatype_size * count;

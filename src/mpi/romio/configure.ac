@@ -919,7 +919,7 @@ AC_ARG_WITH([madfs],
 AS_IF([test "x$with_madfs" != xno], [
     MADFS="yes"
     PAC_SET_HEADER_LIB_PATH(madfs)
-    AC_CHECK_HEADERS(madfs.h,, [
+    AC_CHECK_HEADERS(madfs-posix.h,, [
         AC_MSG_ERROR([NO MADFS HEADER ...])
         unset MADFS
     ])
