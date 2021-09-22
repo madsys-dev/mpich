@@ -22,6 +22,11 @@ extern struct ADIOI_Fns_struct ADIO_UFS_operations;
 /* prototypes are in adio/ad_ufs/ad_ufs.h */
 #endif
 
+#ifdef ROMIO_MADFS
+extern struct ADIOI_Fns_struct ADIO_MADFS_operations;
+/* prototypes are in adio/ad_mad/ad_mad.h */
+#endif
+
 #ifdef ROMIO_XFS
 extern struct ADIOI_Fns_struct ADIO_XFS_operations;
 /* prototypes are in adio/ad_xfs/ad_xfs.h */
