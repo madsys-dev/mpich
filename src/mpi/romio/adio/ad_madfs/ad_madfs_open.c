@@ -9,16 +9,6 @@
 
 extern const MadfsPosix* madfs;
 
-const char* parent_directory(const char* filename) {
-    static char buffer[1000];
-    strcpy(buffer, filename);
-    char *pos = strrchr(buffer, '/');
-    if (pos) {
-        *pos = '\0';
-    }
-    return buffer;
-}
-
 void ADIOI_MADFS_Open(ADIO_File fd, int *error_code)
 {
     int myrank, nprocs;
@@ -40,7 +30,15 @@ void ADIOI_MADFS_Open(ADIO_File fd, int *error_code)
     } else{
         FPRINTF(stdout, "[%d/%d] skipping madfs_openfs, madfs = %p\n", myrank, nprocs, madfs);
     }
-    madfs_lookup(madfs, parent_directory(fd->filename), &parent);
-    madfs_open(madfs, parent, fd->filename, fd->access_mode, 
+    static char buffer[1000];
+    strcpy(buffer, fd->filename);
+    char *base = strrchr(buffer, '/');
+    if (!base) {
+        FPRINTF(stdout, "[%d/%d] path should start from `/` (path = %s)\n", myrank, nprocs, fd->filename);
+    }
+    *(base++) = '\0';
+
+    madfs_lookup(madfs, buffer, &parent);
+    madfs_open(madfs, parent, base, fd->access_mode, 
         O_WRONLY|O_CREAT, 0x100000, &context->inode);
 }
